@@ -1,0 +1,45 @@
+//个人借阅书籍导入数据表操作————————导入<借阅表>
+    public static void insertjieyue(String xuhao,String number) {
+        Connection conn = null;
+
+        Statement stmt = null;
+        Statement stmt1 = null;
+        try {
+            Class.forName(JDBC_DRIVER);
+            System.out.println("insertjieyue:连接数据库......");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            stmt = conn.createStatement();
+            stmt1 = conn.createStatement();
+            int s = Integer.parseInt(xuhao);
+            //获取当前时间
+             SimpleDateFormat  df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String time=df.format(new Date());
+             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+             Date  dateTime = simpleDateFormat.parse(time);
+            StringBuffer sql = new StringBuffer("insert into jieyue(xuhao,number,time) values ('" + s + "','"+number+"','"+time+"')");
+           String  st="update book set  yuliang=yuliang-1  where  xuhao='"+xuhao+"' ";
+            int count = stmt.executeUpdate(sql.toString());
+            int m = stmt1.executeUpdate(st.toString());    //对应书籍yuliang减一
+            System.out.println(xuhao);
+            stmt.close();
+            stmt1.close();
+            conn.close();
+            System.out.println("      insertjieyue:连接数据库成功......");
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stm= null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (con= null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        System.out.println(xh);
+        return;
+    }
